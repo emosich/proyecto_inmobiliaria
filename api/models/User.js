@@ -1,7 +1,21 @@
 const S = require("sequelize");
+const bcrypt = require("bcrypt");
 const db = require("../db");
 
-class User extends S.Model {}
+class User extends S.Model {
+
+    hash(password, salt){
+        return bcrypt.hash(password, salt)
+    }
+
+    validatePassword (password) {
+        
+        return this.hash(password, this.salt)
+            .then(newHash => newHash === this.password )
+    
+    }
+
+}
 
 
 User.init({
@@ -38,5 +52,15 @@ User.init({
 
 
 }, {sequelize: db, modelName: "user"});
+
+User.beforeCreate((user) => {
+    const salt = bcrypt.genSaltSync();
+
+    user.salt = salt;
+ 
+    return user.hash(user.password, salt).then(hash => {
+        user.password = hash
+    });
+});
 
 module.exports = User;
