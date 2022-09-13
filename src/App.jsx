@@ -4,8 +4,12 @@ import { Routes, Route } from "react-router-dom";
 import Register from "./pages/Register"
 import Login from "./pages/Login";
 import LogOut from './pages/LogOut';
+import { useSelector } from 'react-redux';
 
 const App = () => {
+  const reducerState = useSelector(state => state.ejemploSlice)
+ 
+
   return (
     <div>
     <Navbar />
