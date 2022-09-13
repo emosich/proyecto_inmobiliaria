@@ -40,7 +40,6 @@ router.post("/login", (req, res) => {
 //ruta para desloguearse
 router.post("/logout", (req, res) => {
     res.clearCookie("token");
-  
     res.sendStatus(204);
   });
 
