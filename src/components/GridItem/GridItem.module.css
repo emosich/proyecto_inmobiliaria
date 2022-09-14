@@ -1,0 +1,9 @@
+#box {
+    margin: auto;
+	max-width: 240px;
+    height: 350px;
+}
+
+#padin {
+    padding: 0px !important;
+}
