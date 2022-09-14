@@ -1,47 +1,19 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React from "react";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+const Login2 = () => {
 
-const theme = createTheme();
+    const {register, handleSubmit} = useForm();
 
-
-const Login = () => {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-
-        const data3 = {
-          email: data.get('email'),
-          password: data.get('password'),
+    const onSubmit = (data) => {
+        const data1 = {
+            email: data.email,
+          password: data.password
         }
-        console.log(data3)
-        axios
-        .post("http://localhost:3001/api/user/login", data3, {withCredentials:true})
+          console.log(data1)
+          axios
+        .post("http://localhost:3001/api/user/login", data1, {withCredentials:true})
         .then(({ data }) => {
           if (!data.error) {
             console.log("success");
@@ -52,77 +24,35 @@ const Login = () => {
         })
         .catch(() => console.log("/404"));
 
-      };
+    }
+  
 
   return (
-    <ThemeProvider theme={theme}>
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
+    <form className="box" onSubmit={handleSubmit(onSubmit)}>
+      <div className="field">
+        <label className="label">Email</label>
+        <div className="control">
+          <input
             name="email"
-            autoComplete="email"
-            autoFocus
+            className="input"
+            type="email"
+            placeholder="e.g. alex@example.com"
+            {...register("email")}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
-    </Container>
-  </ThemeProvider>
-  )
-}
+        </div>
+      </div>
 
-export default Login
+      <div className="field">
+        <label className="label">Password</label>
+        <div className="control">
+          <input className="input" type="password" placeholder="********" name="password"
+          {...register("password", { required: true })}/>
+        </div>
+      </div>
+
+      <button className="button is-primary">Sign in</button>
+    </form>
+  );
+};
+
+export default Login2;

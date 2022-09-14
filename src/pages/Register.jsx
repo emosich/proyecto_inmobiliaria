@@ -1,159 +1,78 @@
 import React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-const theme = createTheme();
-
 const Register = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const data2 = {
-      name: data.get("firstname"),
-      lastname: data.get("lastname"),
-      email: data.get("email"),
-      password: data.get("password"),
-    }
-    console.log(data2)
-    axios
-      .post("http://localhost:3001/api/user/register", data2)
-      .then(({ data }) => {
-        if (!data.error) {
-          console.log("success");
 
-        } else {
-          console.log("error");
+    const {register, handleSubmit} = useForm();
+
+    const onSubmit = (data) => {
+        const data1 = {
+            name: data.name,
+            lastname: data.lastname,
+            email: data.email,
+          password: data.password
         }
-      })
-      .catch(() => console.log("/404"));
-  };
+          console.log(data1)
+          axios
+        .post("http://localhost:3001/api/user/register", data1, {withCredentials:true})
+        .then(({ data }) => {
+          if (!data.error) {
+            console.log("success");
+  
+          } else {
+            console.log("error");
+          }
+        })
+        .catch(() => console.log("/404"));
+
+    }
+
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstname"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastname"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+    <form className="box" onSubmit={handleSubmit(onSubmit)}>
+      <div className="columns">
+        <div className="column">
+          <div className="field">
+            <label className="label">Name</label>
+            <div className="control">
+              <input className="input" type="text" placeholder="Text input" name="name" {...register("name")}/>
+            </div>
+          </div>
+        </div>
+        
+        <div className="column">
+          <div className="field">
+            <label className="label">Last Name</label>
+            <div className="control">
+              <input className="input" type="text" placeholder="Text input" name="lastname" {...register("lastname")}/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="field">
+        <label className="label">Email</label>
+        <div className="control">
+          <input
+            className="input"
+            type="email"
+            placeholder="e.g. alex@example.com"
+            name="email"
+            {...register("email")}
+          />
+        </div>
+      </div>
+
+      <div className="field">
+        <label className="label">Password</label>
+        <div className="control">
+          <input className="input" type="password" placeholder="********" name="password" {...register("password")}/>
+        </div>
+      </div>
+
+      <button className="button is-primary">Sign up</button>
+    </form>
   );
 };
 
