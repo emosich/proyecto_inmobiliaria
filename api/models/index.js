@@ -5,8 +5,7 @@ const Property = require("./Property");
 //Category tiene muchas Propertys
 //Property tiene una category
 
-Category.hasMany(Property);
-Property.hasOne(Category);
+Property.belongsTo(Category);
 
 
 module.exports = { User, Category, Property };
