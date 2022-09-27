@@ -1,6 +1,7 @@
 const express = require("express");
+const Sequelize = require("sequelize");
+const User = require("../models/User.js");
 const router = express.Router();
-const User = require("../models/User");
 const { generateToken } = require("../config/tokens");
 const { validatePassword } = require("../models/User");
 
@@ -42,5 +43,43 @@ router.post("/logout", (req, res) => {
     res.clearCookie("token");
     res.sendStatus(204);
   });
+
+//ruta vista admin todos los usuarios
+router.get("/admusers", (req, res) => {
+  User.findAll().then((users) => {
+    res.send(users);
+  });
+});
+
+//ruta para ver el detalle de un usuario
+router.get("/edituser/:id", (req, res) => {
+  User.findByPk(req.params.id)
+  .then((user) =>
+    res.send(user))
+});
+
+//ruta para editar un usuario
+router.put("/edituser/:id", (req, res) => {
+  const { id } = req.params;
+
+   User.update(
+    req.body,
+    { where: {id:id} }
+  ).then((data)=>{
+    res.status(200).send(data);
+  }); 
+});
+
+//ruta para eliminar un usuario
+router.delete("/edituser/:id", (req, res) => {
+  User.destroy({
+    where: {id: req.params.id },
+  }).then(() => {
+    res.sendStatus(202);
+  })
+  .catch((err) => console.log(err));
+})
+
+
 
 module.exports = router;

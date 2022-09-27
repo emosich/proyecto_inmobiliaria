@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./GridItem.module.css";
+import axios from "axios";
+
 
 const GridItem = () => {
+
+  const [propiedades, setPropiedades] = useState([]);
+
+  useEffect(() => {
+    axios
+    .get("http://localhost:3001/api/property/admprops")
+    .then((res) => {
+      setPropiedades(res.data);
+    })
+  }, []);
+  if (!propiedades) return null;
+
+  console.log(propiedades);
+
+
   return (
     <div className="box" id={classes.box}>
       <div className="card-image block">
         <figure className="image is-4by3" >
           <img
-            src="https://bulma.io/images/placeholders/1280x960.png"
+            src="https://periodico-assets.tadevel-cdn.com/60cfc22915f9b452216026e3/image.jpg"
             alt="Placeholder image"
             id="padin"
           />
