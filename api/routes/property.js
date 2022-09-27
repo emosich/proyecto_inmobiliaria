@@ -11,6 +11,13 @@ router.get("/admprops", (req, res) => {
     });
   });
 
+//ruta para traer 1 sola propiedad
+router.get("/singleproperty/:id", (req, res) => {
+  const { id } = req.params;
+  Property.findByPk(id)
+  .then((property) =>
+    res.send(property))
+})
 
 
 module.exports = router;

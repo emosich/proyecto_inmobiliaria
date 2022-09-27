@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./GridItem.module.css";
+import axios from "axios";
+
 
 const GridItem = () => {
+
+  const [propiedades, setPropiedades] = useState([]);
+
+  useEffect(() => {
+    axios
+    .get("http://localhost:3001/api/property/admprops")
+    .then((res) => {
+      setPropiedades(res.data);
+    })
+  }, []);
+  if (!propiedades) return null;
+
+  console.log(propiedades);
+
+
   return (
     <div className="box" id={classes.box}>
       <div className="card-image block">

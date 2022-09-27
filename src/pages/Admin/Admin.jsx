@@ -1,8 +1,5 @@
 import React from "react";
 import classes from "./Admin.module.css";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import ContentUsers from "../../components/ContentUsers";
 import { useNavigate } from "react-router";
 
 const Admin = () => {
@@ -10,11 +7,11 @@ const Admin = () => {
 
   const handleClickUsers = () => {
     console.log("Hubo un click", );
-    setTimeout(() => navigate("/ContentUsers"), 100);
+    setTimeout(() => navigate("/ContentUsers"), 10);
   };
   const handleClickPropi = () => {
     console.log("Hubo un click", );
-    setTimeout(() => navigate("/Contentpropi"), 100);
+    setTimeout(() => navigate("/Contentpropi"), 10);
   };
 
   return (

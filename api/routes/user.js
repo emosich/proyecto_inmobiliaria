@@ -60,12 +60,24 @@ router.get("/edituser/:id", (req, res) => {
 
 //ruta para editar un usuario
 router.put("/edituser/:id", (req, res) => {
-  User.update(req.body, { where: { id: req.params.id }, returning: true })
-    .then(([affectedRows, updated]) => {
-      const userUpdated = updated[0];
-      res.send(userUpdated);
-    })
-    .catch((err) => console.log(err));
+  const { id } = req.params;
+
+   User.update(
+    req.body,
+    { where: {id:id} }
+  ).then((data)=>{
+    res.status(200).send(data);
+  }); 
+});
+
+//ruta para eliminar un usuario
+router.delete("/edituser/:id", (req, res) => {
+  User.destroy({
+    where: {id: req.params.id },
+  }).then(() => {
+    res.sendStatus(202);
+  })
+  .catch((err) => console.log(err));
 })
 
 

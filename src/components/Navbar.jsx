@@ -1,16 +1,24 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav className="navbar is-success block" role="navigation" aria-label="main navigation">
+    <nav
+      className="navbar is-success block"
+      role="navigation"
+      aria-label="main navigation"
+    >
       <div className="navbar-brand">
-        <a className="navbar-item" href="http://localhost:3000/">
+      <Link to={"/"} >
+      <a className="navbar-item">
           <img
             src="https://bulma.io/images/bulma-logo.png"
             width="112"
             height="28"
           />
         </a>
+      </Link>
+        
 
         <a
           role="button"
@@ -60,11 +68,21 @@ const Navbar = () => {
 
         <div className="navbar-end">
           <div className="navbar-item">
+            <Link to="/myaccount">
+              <a className="button is-primary">Mi cuenta</a>
+            </Link>
+            <Link to="/admin">
+              <a className="button is-light">Admin</a>
+            </Link>
             <div className="buttons">
-              <a className="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a className="button is-light">Log in</a>
+              <Link to="/register">
+                <a className="button is-primary">
+                  <strong>Sign up</strong>
+                </a>
+              </Link>
+              <Link to="/login">
+                <a className="button is-light">Log in</a>
+              </Link>
             </div>
           </div>
         </div>
